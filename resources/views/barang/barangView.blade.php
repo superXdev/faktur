@@ -37,9 +37,9 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="text-center">
-                            <a class="btn btn-info" href="{{ route('barang.edit', $data->slug) }}">Perbarui</a>
-                        </div>
+                    </div>
+                    <div class="text-center">
+                        <a class="btn btn-info" href="{{ route('barang.edit', $data->slug) }}">Perbarui</a>
                     </div>
                 </div>
             </div>

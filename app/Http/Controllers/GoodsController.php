@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
-use Alert;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class GoodsController extends Controller
 {
@@ -56,7 +56,7 @@ class GoodsController extends Controller
         Goods::create($form_data);
 
         $slug = DB::table('goods')->select('slug')->where('kodeBarang', '=', $request->kodeBarang)->first();
-        toast('Your Post as been submited!','success');
+        toast('Barang ditambahkan!','success')->position('top-end');
         return redirect()->route('barang.view', $slug->slug);
     }
 
@@ -84,7 +84,8 @@ class GoodsController extends Controller
         );
 
         Goods::where('slug', $slug)->update($form_data);
-
-        return redirect()->route('barang.view', $slug);
+        $slugNew = DB::table('goods')->select('slug')->where('kodeBarang', '=', $request->kodeBarang)->first();
+        toast('Barang berhasil di perbarui!','success')->position('top-end');
+        return redirect()->route('barang.view', $slugNew->slug);
     }
 }
