@@ -1,12 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ae86911-3e02-42f1-bc5f-0185f0d75308" name="Default Changelist" comment="">
+    <list default="true" id="0ae86911-3e02-42f1-bc5f-0185f0d75308" name="Default Changelist" comment="update barang fixed">
+      <change afterPath="$PROJECT_DIR$/app/Models/GoodsFirstStock.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/GoodsStock.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_11_07_224934_create_goods_stocks_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_11_07_230259_create_goods_first_stocks_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/GoodsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/GoodsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/barang/barangEdit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/barang/barangEdit.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/barang/barangView.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/barang/barangView.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/components/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/harga-per-jenis/add-harga-barang.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/harga-per-jenis/add-harga-barang.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/harga-per-jenis/list-harga-barang.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/harga-per-jenis/list-harga-barang.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/outlet/outlet-store.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/outlet/outlet-store.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +179,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="G:/CRUD-Laravel-Jetstream" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/Compressed/asd/siakadswithoutbackup" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="Laravel.SettingsForm" />
   </component>
@@ -177,22 +202,47 @@
       <workItem from="1604529065031" duration="17490000" />
       <workItem from="1604641914273" duration="10960000" />
       <workItem from="1604706566742" duration="20869000" />
-      <workItem from="1604784214847" duration="3592000" />
+      <workItem from="1604784214847" duration="6709000" />
+      <workItem from="1604829802605" duration="5578000" />
     </task>
+    <task id="LOCAL-00001" summary="update barang fixed">
+      <created>1604789305396</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1604789305397</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update barang fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="update barang fixed" />
   </component>
   <component name="WindowStateProjectService">
     <state x="530" y="185" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1604720737624">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="530" y="185" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1600.860@0.0.1600.860" timestamp="1604720737624" />
-    <state x="580" y="185" key="FileChooserDialogImpl" timestamp="1604555041548">
+    <state x="580" y="185" key="FileChooserDialogImpl" timestamp="1604832617471">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="580" y="185" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1604555041548" />
+    <state x="580" y="185" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1604832617471" />
     <state x="664" y="508" key="Github.ShareDialog" timestamp="1604737752762">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
@@ -209,5 +259,9 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="92" y="92" width="1416" height="676" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1600.860@0.0.1600.860" timestamp="1604789205315" />
+    <state x="507" y="163" width="585" height="534" key="find.popup" timestamp="1604829968988">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="507" y="163" width="585" height="534" key="find.popup/0.0.1600.860@0.0.1600.860" timestamp="1604829968988" />
   </component>
 </project>

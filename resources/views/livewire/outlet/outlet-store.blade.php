@@ -20,6 +20,7 @@
                         <option value="ramen">Ramen</option>
                         <option value="nasiGoreng">Nasi Goreng</option>
                         <option value="martabak">Martabak</option>
+                        <option value="kopi">Kopi</option>
                     </select>
                 </div>
                 <div class="form-group">

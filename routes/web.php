@@ -24,10 +24,13 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::view('/dashboard', "dashboard")->name('dashboard');
 
     //Route for Goods
+    //Rute for Goods - Process
+    Route::post('/barang/stok-awal-simpan', [GoodsController::class, "firstStock"])->name('barang.fStock');
     Route::put('/barang/{slug}/perbarui-simpan', [GoodsController::class, "update"])->name('barang.update');
     Route::post('/barang/baru-simpan', [GoodsController::class, "store"])->name('barang.store');
     Route::get('/barang/tambah', [GoodsController::class, "create"])->name('barang.create');
     Route::get('/barang/list-barang', [GoodsController::class, "getGoods"])->name('barang.getList');
+    //Rute for Goods - Views
     Route::get('/barang/{slug}/perbarui', [GoodsController::class, "edit"])->name('barang.edit');
     Route::get('/barang/{slug}', [GoodsController::class, "view"])->name('barang.view');
     Route::get('/barang', [GoodsController::class, "index"])->name('barang.index');

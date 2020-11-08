@@ -10,6 +10,7 @@
                     <option value="ramen">Ramen</option>
                     <option value="nasiGoreng">Nasi Goreng</option>
                     <option value="martabak">Martabak</option>
+                    <option value="kopi">Kopi</option>
                 </select>
                 @error('jenisOutlet')
                 <span class="invalid-feedback">

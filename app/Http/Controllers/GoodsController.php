@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Goods;
+use App\Models\GoodsFirstStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -87,5 +88,22 @@ class GoodsController extends Controller
         $slugNew = DB::table('goods')->select('slug')->where('kodeBarang', '=', $request->kodeBarang)->first();
         toast('Barang berhasil di perbarui!','success')->position('top-end');
         return redirect()->route('barang.view', $slugNew->slug);
+    }
+
+    public function firstStock(Request $request)
+    {
+        $request->validate([
+            'stokAwal' => 'required|min:1'
+        ]);
+
+        $form_data = array(
+            'goods_id' => $request->goods_id,
+            'keterangan' => $request->keterangan,
+            'stokAwal' => $request->stokAwal
+        );
+
+        GoodsFirstStock::create($form_data);
+        toast('Stok awal berhasil di simpan!','success')->position('top-end');
+        return back();
     }
 }

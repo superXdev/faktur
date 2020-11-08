@@ -43,6 +43,50 @@
                     </div>
                 </div>
             </div>
+            @if($data->stok === null)
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post" action="{{ route('barang.fStock') }}" enctype="multipart/form-data" autocomplete="off">
+                            @csrf
+                            <div hidden class="form-group">
+                                <label for="goods_id">goods_id</label>
+                                <input name="goods_id" value="{{ $data->id }}" type="text" class="form-control @error('goods_id') is-invalid @enderror" id="goods_id" aria-describedby="goods_id">
+                                @error('goods_id')
+                                <span class="invalid-feedback">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-10">
+                                    <label for="keterangan">Keterangan</label>
+                                    <input name="keterangan" type="text" class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" aria-describedby="keterangan">
+                                    @error('keterangan')
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="stokAwal">Stok Awal</label>
+                                    <input name="stokAwal" type="number" class="form-control @error('stokAwal') is-invalid @enderror" id="stokAwal" aria-describedby="stokAwal">
+                                    @error('stokAwal')
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            @else
+                <div class="card">
+                    <div class="card-body">
+                        b
+                    </div>
+                </div>
+            @endif
         </div>
         <div class="col-md-6">
             <div class="card">

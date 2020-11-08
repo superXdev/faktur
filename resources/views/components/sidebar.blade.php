@@ -49,6 +49,25 @@
                 <a class="nav-link" href="{{ route('barang.index') }}"><i class="fas fa-boxes"></i><span>Daftar Barang</span></a>
             </li>
 
+            <li class="menu-header">Stok</li>
+            <li class="{{ Request::routeIs('stok.*') ? 'active' : '' }}">
+                <a class="nav-link" href="javascript:void0"><i class="fas fa-exchange-alt"></i><span>Daftar Stok</span></a>
+            </li>
+            <li class="{{ Request::routeIs('stok.*') ? 'active' : '' }}">
+                <a class="nav-link" href="javascript:void0"><i class="fas fa-people-carry"></i><span>Stok Masuk</span></a>
+            </li>
+            <li class="{{ Request::routeIs('stok.*') ? 'active' : '' }}">
+                <a class="nav-link" href="javascript:void0"><i class="fas fa-exclamation-circle"></i><span>Stok Kurang</span></a>
+            </li>
+
+            <li class="menu-header">Faktur</li>
+            <li class="{{ Request::routeIs('faktur.*') ? 'active' : '' }}">
+                <a class="nav-link" href="javascript:void0"><i class="fas fa-exchange-alt"></i><span>Buat Faktur</span></a>
+            </li>
+
+            <li class="menu-header">Laporan</li>
+
+
             <li class="menu-header">User</li>
             <li class="nav-item dropdown {{ Route::is(['user', 'user.*']) ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Data Pendukung</span></a>

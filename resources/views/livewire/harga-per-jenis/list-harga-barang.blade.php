@@ -13,11 +13,13 @@
                 <tr>
                     <td class="h5">
                         @if( $h->jenisOutlet === 'ramen')
-                        Ramen
+                            Ramen
                         @elseif( $h->jenisOutlet === 'nasiGoreng')
-                        Nasi Goreng
+                            Nasi Goreng
+                        @elseif( $h->jenisOutlet === 'kopi')
+                            Kopi
                         @else
-                        Martabak
+                            Martabak
                         @endif
                     </td>
                     <td class="h5">
