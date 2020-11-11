@@ -19,18 +19,23 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ae86911-3e02-42f1-bc5f-0185f0d75308" name="Default Changelist" comment="update barang fixed">
-      <change afterPath="$PROJECT_DIR$/app/Models/GoodsFirstStock.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/GoodsStock.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_11_07_224934_create_goods_stocks_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_11_07_230259_create_goods_first_stocks_table.php" afterDir="false" />
+    <list default="true" id="0ae86911-3e02-42f1-bc5f-0185f0d75308" name="Default Changelist" comment="Updating Stok">
+      <change afterPath="$PROJECT_DIR$/resources/views/barang/stokDex.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/barang/stokInDex.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/barang/stokLowDex.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/faktur-jetstream.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/faktur-jetstream.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/GoodsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/GoodsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OutletController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OutletController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/barang/barangView.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/barang/barangView.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/components/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/harga-per-jenis/add-harga-barang.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/harga-per-jenis/add-harga-barang.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/harga-per-jenis/list-harga-barang.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/harga-per-jenis/list-harga-barang.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/outlet/outlet-store.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/outlet/outlet-store.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -179,7 +184,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/Compressed/asd/siakadswithoutbackup" />
+    <property name="last_opened_file_path" value="H:/yon-master" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="Laravel.SettingsForm" />
   </component>
@@ -203,7 +208,12 @@
       <workItem from="1604641914273" duration="10960000" />
       <workItem from="1604706566742" duration="20869000" />
       <workItem from="1604784214847" duration="6709000" />
-      <workItem from="1604829802605" duration="5578000" />
+      <workItem from="1604829802605" duration="14847000" />
+      <workItem from="1604879734582" duration="13742000" />
+      <workItem from="1604957484816" duration="16882000" />
+      <workItem from="1605023482840" duration="4579000" />
+      <workItem from="1605048769056" duration="9787000" />
+      <workItem from="1605058635990" duration="8269000" />
     </task>
     <task id="LOCAL-00001" summary="update barang fixed">
       <created>1604789305396</created>
@@ -212,7 +222,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604789305397</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Updating Stok">
+      <created>1604837558226</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1604837558226</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,17 +249,18 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update barang fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="update barang fixed" />
+    <MESSAGE value="Updating Stok" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updating Stok" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="530" y="185" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1604720737624">
+    <state x="530" y="185" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1604985844754">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="530" y="185" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1600.860@0.0.1600.860" timestamp="1604720737624" />
-    <state x="580" y="185" key="FileChooserDialogImpl" timestamp="1604832617471">
+    <state x="530" y="185" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1600.860@0.0.1600.860" timestamp="1604985844754" />
+    <state x="580" y="185" key="FileChooserDialogImpl" timestamp="1604959733098">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="580" y="185" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1604832617471" />
+    <state x="580" y="185" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1604959733098" />
     <state x="664" y="508" key="Github.ShareDialog" timestamp="1604737752762">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
@@ -255,13 +273,17 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="301" y="75" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1604531965876" />
-    <state x="92" y="92" width="1416" height="676" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1604789205315">
+    <state x="392" y="163" key="Vcs.Push.Dialog.v2" timestamp="1604837564210">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="92" y="92" width="1416" height="676" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1600.860@0.0.1600.860" timestamp="1604789205315" />
-    <state x="507" y="163" width="585" height="534" key="find.popup" timestamp="1604829968988">
+    <state x="392" y="163" key="Vcs.Push.Dialog.v2/0.0.1600.860@0.0.1600.860" timestamp="1604837564210" />
+    <state x="92" y="92" width="1416" height="676" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1604907394143">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="507" y="163" width="585" height="534" key="find.popup/0.0.1600.860@0.0.1600.860" timestamp="1604829968988" />
+    <state x="92" y="92" width="1416" height="676" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1600.860@0.0.1600.860" timestamp="1604907394143" />
+    <state x="507" y="163" width="585" height="534" key="find.popup" timestamp="1605052466583">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="507" y="163" width="585" height="534" key="find.popup/0.0.1600.860@0.0.1600.860" timestamp="1605052466583" />
   </component>
 </project>

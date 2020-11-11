@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GoodsStocksController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OutletController;
@@ -23,6 +24,16 @@ Route::get('/', function () {
 Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::view('/dashboard', "dashboard")->name('dashboard');
 
+
+    //Route for Goods Stocks Proccess
+    Route::get('/stok/list-stok-kurang', [GoodsStocksController::class, "getStockLow"])->name('stokKurang.getList');
+    Route::get('/stok/list-stok-masuk', [GoodsStocksController::class, "getStockIn"])->name('stokMasuk.getList');
+    Route::post('/stok/stok-masuk-simpan', [GoodsStocksController::class, "store"])->name('stokMasuk.store');
+    Route::get('/stok/list-barang', [GoodsStocksController::class, "getGoodsStocks"])->name('stok.getList');
+    //Route for Goods Stock
+    Route::get('/barang/stok-kurang', [GoodsStocksController::class, "indexStockLow"])->name('stokKurang.index');
+    Route::get('/barang/stok-masuk', [GoodsStocksController::class, "indexStockIn"])->name('stokMasuk.index');
+    Route::get('/barang/daftar-stok', [GoodsStocksController::class, "index"])->name('stok.index');
     //Route for Goods
     //Rute for Goods - Process
     Route::post('/barang/stok-awal-simpan', [GoodsController::class, "firstStock"])->name('barang.fStock');

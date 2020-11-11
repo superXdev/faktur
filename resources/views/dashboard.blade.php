@@ -9,6 +9,8 @@
     </x-slot>
 
     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-        <x-jet-welcome />
+{{--        <x-jet-welcome />--}}
+        <h1>MAINTENANCE MODE</h1>
+        <div class="h1">Tambahkan data yang terkait dengan Barang dan Stok</div>
     </div>
 </x-app-layout>

@@ -30,8 +30,11 @@
                                 Minimal Stok : {{ $data->minStok }}
                             </div>
                             <div class="h5 mt-4">
-                                @if( $data->stok === null)
+                                @if( $data->stok === 0)
                                     Stok : <strong style="color: red">Stok Kosong</strong>
+                                @elseif( $data->stok <= $data->minStok)
+                                    Stok : <strong style="color: red">{{ $data->stok }}</strong>
+                                    <div class="font-weight-600 text-small" style="color: red"><strong>Segera stok ulang barang!</strong></div>
                                 @else
                                     Stok : {{ $data->stok }}
                                 @endif
@@ -43,7 +46,9 @@
                     </div>
                 </div>
             </div>
-            @if($data->stok === null)
+        </div>
+        <div class="col-md-6">
+            @if($data->stok === 0)
                 <div class="card">
                     <div class="card-body">
                         <form method="post" action="{{ route('barang.fStock') }}" enctype="multipart/form-data" autocomplete="off">
@@ -77,24 +82,26 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="text-center">
+                                <button class="btn btn-info" type="submit">Tambah</button>
+                            </div>
                         </form>
                     </div>
                 </div>
             @else
-                <div class="card">
-                    <div class="card-body">
-                        b
-                    </div>
-                </div>
             @endif
-        </div>
-        <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
                     <livewire:harga-per-jenis.add-harga-barang :data="$data" />
                 </div>
             </div>
             <div class="card">
+                @if($data->stok === 0)
+                @else
+                    <div class="card-header">
+                        Stok Awal : {{ $stokAwal->stokAwal }} | Tanggal Masuk : {{ $stokAwal->created_at }}
+                    </div>
+                @endif
                 <div class="card-body">
                     <livewire:harga-per-jenis.list-harga-barang :data="$data"/>
                 </div>

@@ -64,7 +64,11 @@ class GoodsController extends Controller
     public function view($slug)
     {
         $data = Goods::where('slug', $slug)->firstOrFail();
-        return view('barang.barangView', compact('data'));
+        $stokAwal = DB::table('goods_first_stocks')
+            ->select('stokAwal', 'created_at')
+            ->where('goods_id', '=', $data->id)
+            ->first();
+        return view('barang.barangView', compact('data', 'stokAwal'));
     }
 
     public function edit($slug)
@@ -103,6 +107,11 @@ class GoodsController extends Controller
         );
 
         GoodsFirstStock::create($form_data);
+
+        DB::table('goods')
+            ->where('id', '=', $request->goods_id)
+            ->increment('stok', $request->stokAwal);
+
         toast('Stok awal berhasil di simpan!','success')->position('top-end');
         return back();
     }

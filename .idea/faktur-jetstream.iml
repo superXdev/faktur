@@ -136,5 +136,7 @@
     <orderEntry type="library" name="free-v4-shims" level="application" />
     <orderEntry type="library" name="free-v4-font-face" level="application" />
     <orderEntry type="library" name="free" level="application" />
+    <orderEntry type="library" name="dataTables.buttons" level="application" />
+    <orderEntry type="library" name="buttons.bootstrap4" level="application" />
   </component>
 </module>

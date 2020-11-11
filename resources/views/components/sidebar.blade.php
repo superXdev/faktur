@@ -51,13 +51,13 @@
 
             <li class="menu-header">Stok</li>
             <li class="{{ Request::routeIs('stok.*') ? 'active' : '' }}">
-                <a class="nav-link" href="javascript:void0"><i class="fas fa-exchange-alt"></i><span>Daftar Stok</span></a>
+                <a class="nav-link" href="{{ route('stok.index') }}"><i class="fas fa-exchange-alt"></i><span>Daftar Stok</span></a>
             </li>
-            <li class="{{ Request::routeIs('stok.*') ? 'active' : '' }}">
-                <a class="nav-link" href="javascript:void0"><i class="fas fa-people-carry"></i><span>Stok Masuk</span></a>
+            <li class="{{ Request::routeIs('stokMasuk.*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('stokMasuk.index') }}"><i class="fas fa-people-carry"></i><span>Stok Masuk</span></a>
             </li>
-            <li class="{{ Request::routeIs('stok.*') ? 'active' : '' }}">
-                <a class="nav-link" href="javascript:void0"><i class="fas fa-exclamation-circle"></i><span>Stok Kurang</span></a>
+            <li class="{{ Request::routeIs('stokKurang.*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('stokKurang.index') }}"><i class="fas fa-exclamation-circle"></i><span>Stok Kurang</span></a>
             </li>
 
             <li class="menu-header">Faktur</li>
@@ -68,18 +68,18 @@
             <li class="menu-header">Laporan</li>
 
 
-            <li class="menu-header">User</li>
-            <li class="nav-item dropdown {{ Route::is(['user', 'user.*']) ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Data Pendukung</span></a>
-                <ul class="dropdown-menu">
-                    <li class="{{ Route::is('user') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('user') }}">User</a>
-                    </li>
-                    <li class="{{ Route::is('user.new') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('user.new') }}">New User</a>
-                    </li>
-                </ul>
-            </li>
+{{--            <li class="menu-header">User</li>--}}
+{{--            <li class="nav-item dropdown {{ Route::is(['user', 'user.*']) ? 'active' : '' }}">--}}
+{{--                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Data Pendukung</span></a>--}}
+{{--                <ul class="dropdown-menu">--}}
+{{--                    <li class="{{ Route::is('user') ? 'active' : '' }}">--}}
+{{--                        <a class="nav-link" href="{{ route('user') }}">User</a>--}}
+{{--                    </li>--}}
+{{--                    <li class="{{ Route::is('user.new') ? 'active' : '' }}">--}}
+{{--                        <a class="nav-link" href="{{ route('user.new') }}">New User</a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
         </ul>
     </aside>
 </div>

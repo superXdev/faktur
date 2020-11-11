@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Outlet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OutletController extends Controller
 {
