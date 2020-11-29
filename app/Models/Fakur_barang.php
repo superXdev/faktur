@@ -4,12 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
-class Outlet extends Model
+class Faktur_barang extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'kodeOutlet','slug', 'namaOutlet', 'alamat', 'telepon', 'status', 'jenisOutlet'
+        'faktur_id',
+        'barang_id',
+        'qty',
+        'jumlah_harga',
+        'HPP',
+        'laba'
     ];
+   
 }

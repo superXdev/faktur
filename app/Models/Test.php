@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Outlet extends Model
+class Test extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'kodeOutlet','slug', 'namaOutlet', 'alamat', 'telepon', 'status', 'jenisOutlet'
+        'satuan','jumlahMaterial', 'satuanHarga', 'jumlahHarga'
     ];
 }

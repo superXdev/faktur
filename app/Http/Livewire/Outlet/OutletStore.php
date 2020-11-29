@@ -8,6 +8,7 @@ use Livewire\Component;
 
 class OutletStore extends Component
 {
+    public $kodeOutlet;
     public $namaOutlet;
     public $alamat;
     public $telepon;
@@ -30,6 +31,7 @@ class OutletStore extends Component
 
         $outlet = Outlet::create([
             'slug' => Str::slug($this->namaOutlet).'-'.Str::random(5),
+            'kodeOutlet' => $this->kodeOutlet,
             'namaOutlet' => $this->namaOutlet,
             'alamat' => $this->alamat,
             'telepon' => $this->telepon,
@@ -49,6 +51,8 @@ class OutletStore extends Component
 
     private function resetInput()
     {
+        
+        $this->kodeOutlet = null;
         $this->namaOutlet = null;
         $this->alamat = null;
         $this->telepon = null;
