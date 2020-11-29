@@ -11,8 +11,9 @@
                 <table class="table">
                     <thead>
                     <tr>
+                        <th scope="col">Kode Outlet</th>
                         <th scope="col">Nama Outlet</th>
-                        <th scope="col">Kecamatan</th>
+                        <th scope="col">Alamat</th>
                         <th scope="col">No. Telepon</th>
                         <th scope="col" class="text-center">Status</th>
                         <th scope="col"></th>
@@ -21,6 +22,7 @@
                     <tbody wire:loading.class="opacity-50">
                     @forelse( $data as $d )
                         <tr>
+                            <td>{{ $d->kodeOutlet }}</td>
                             <td>{{ $d->namaOutlet }}</td>
                             <td>{{ $d->alamat }}</td>
                             <td>0{{ $d->telepon }}</td>

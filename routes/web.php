@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\FakturController;
 use App\Http\Controllers\GoodsStocksController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OutletController;
 use App\Http\Controllers\GoodsController;
+use App\Http\Controllers\LaporanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,4 +56,16 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::get('/user', [ UserController::class, "index_view" ])->name('user');
     Route::view('/user/new', "pages.user.user-new")->name('user.new');
     Route::view('/user/edit/{userId}', "pages.user.user-edit")->name('user.edit');
+
+    Route::get('/faktur', [FakturController::class, "index"])->name('faktur.index');
+    Route::get('/faktur/{id}', [FakturController::class, "getOutlet"]);
+    Route::get('/fakturJenis/{jenisOutlet}', [FakturController::class, "getJenis"]);
+    Route::get('/fakturGoods/{goodsId}', [FakturController::class, "getGoods"]);
+    Route::get('/faktur/create', [FakturController::class, "create"]);
+    Route::post('/faktur/store', [FakturController::class, "store"])->name('faktur.store');
+
+    //ROute Laporan
+    Route::get('/laporan', [LaporanController::class, "index"])->name('laporan.index');
+    Route::post('/laporan', [LaporanController::class, "index"])->name('laporan.index');
+
 });

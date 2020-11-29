@@ -62,10 +62,13 @@
 
             <li class="menu-header">Faktur</li>
             <li class="{{ Request::routeIs('faktur.*') ? 'active' : '' }}">
-                <a class="nav-link" href="javascript:void0"><i class="fas fa-exchange-alt"></i><span>Buat Faktur</span></a>
+                <a class="nav-link" href="{{ route('faktur.index') }}"><i class="fas fa-exchange-alt"></i><span>Buat Faktur</span></a>
             </li>
 
             <li class="menu-header">Laporan</li>
+            <li class="{{ Request::routeIs('laporan.*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('laporan.index') }}"><i class="fas fa-exchange-alt"></i><span>Buat Laporan</span></a>
+            </li>
 
 
 {{--            <li class="menu-header">User</li>--}}

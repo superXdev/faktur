@@ -5,6 +5,15 @@
             <h3 class="card-title"><strong>Tambah Outlet</strong></h3>
             <form wire:submit.prevent="store" autocomplete="off">
                 <div class="form-group">
+                    <label for="namaOutlet">Kode Outlet</label>
+                    <input wire:model="kodeOutlet" type="text" class="form-control @error('kodeOutlet') is-invalid @enderror" id="kodeOutlet" aria-describedby="kodeOutlet">
+                    @error('kodeOutlet')
+                    <span class="invalid-feedback">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                <div class="form-group">
                     <label for="namaOutlet">Nama Outlet</label>
                     <input wire:model="namaOutlet" type="text" class="form-control @error('namaOutlet') is-invalid @enderror" id="namaOutlet" aria-describedby="namaOutlet">
                     @error('namaOutlet')
