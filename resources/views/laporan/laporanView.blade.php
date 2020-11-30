@@ -25,25 +25,12 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Periode</label>
-                            <div class="selectgroup w-100">
-                                <label class="selectgroup-item">
-                                  <input type="radio" name="value" value="50" class="selectgroup-input" checked="">
-                                  <span class="selectgroup-button">S</span>
-                                </label>
-                                <label class="selectgroup-item">
-                                  <input type="radio" name="value" value="100" class="selectgroup-input">
-                                  <span class="selectgroup-button">M</span>
-                                </label>
-                                <label class="selectgroup-item">
-                                  <input type="radio" name="value" value="150" class="selectgroup-input">
-                                  <span class="selectgroup-button">L</span>
-                                </label>
-                                <label class="selectgroup-item">
-                                  <input type="radio" name="value" value="200" class="selectgroup-input">
-                                  <span class="selectgroup-button">XL</span>
-                                </label>
-                              </div>
+                            <label>tanggal awal</label>
+                            <input type="date" name="awal" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>tanggal akhir</label>
+                            <input type="date" name="akhir" class="form-control">
                         </div>
                        
                         <div class="text-center">
@@ -65,21 +52,26 @@
                         <table class="table">
                             <thead>
                             <tr>
+                                <th>no</th>
                                 <th scope="col">Nama Outlet</th>
                                 <th scope="col">invoice</th>
                                 <th scope="col">total</th>
                                 <th scope="col">HPP</th>
                                 <th scope="col">Laba</th>
-                                <th scope="col"></th>
+                                <th scope="col">action</th>
                             </tr>
                             </thead>
+                            <?php $no = 0;?>
                             @foreach ($ViewsPage as $V)
+                            <?php $no++ ;?>
                                 <tr>
+                                    <td>{{ $no }}</td>
                                     <td>{{ $V->namaOutlet }}</td>
                                     <td>{{ $V->invoice }}</td>
                                     <td>{{ $V->grandTotal }}</td>
                                     <td>{{ $V->HPP }}</td>
                                     <td>{{ $V->laba }}</td>
+                                    <td><a href="/kwitansi/cetak/{{ $V->id }}" class="btn btn-xs btn-primary">Cetak</a></td>
                                     
                                 </tr>
                                 @endforeach

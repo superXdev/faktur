@@ -67,5 +67,9 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     //ROute Laporan
     Route::get('/laporan', [LaporanController::class, "index"])->name('laporan.index');
     Route::post('/laporan', [LaporanController::class, "index"])->name('laporan.index');
+    Route::get('/laporan/cetak/{id}',[LaporanController::class, "cetak"])->name('laporan.cetak');
+    Route::post('/laporan/invoice', [LaporanController::class, "update"])->name('laporan.update');
+    
+    Route::get('/kwitansi/cetak/{id}', [LaporanController::class, "cetak"])->name('laporan.cetak');
 
 });

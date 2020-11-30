@@ -178,6 +178,10 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
+        Barryvdh\Snappy\ServiceProvider::class,
+        Riskihajar\Terbilang\TerbilangServiceProvider::class,
+
 
     ],
 
@@ -231,6 +235,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+'Terbilang' => Riskihajar\Terbilang\Facades\Terbilang::class,
     ],
 
 ];

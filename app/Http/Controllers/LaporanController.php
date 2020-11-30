@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Outlet;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon as SupportCarbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
-use PDF;
-
+use Barryvdh\Snappy\PdfWrapper;
+use App\Http\Controllers\PDF;
 class LaporanController extends Controller
 {
     //
@@ -17,22 +20,28 @@ class LaporanController extends Controller
         $goods = DB::table('outlets')->get();
 
         $from = $req->input('jenisOutlet');
+        $awal = $req->input('awal');
+        $akhir = $req->input('akhir');
+        
             $to   = $req->input('periode');
             if ($req->has('search'))
             {
                 // select search
-                $ViewsPage = DB::select("SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
+                
+                $ViewsPage = DB::select("SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP,fakturs.id FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
                 JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
-                JOIN goods ON goods.id = faktur_barangs.idBarang where namaOutlet='$from' order by fakturs.created_at asc");
+                JOIN goods ON goods.id = faktur_barangs.idBarang where namaOutlet='$from' and fakturs.tanggal between  '$awal' and '$akhir'");
                 return view('laporan.laporanView',compact('ViewsPage'), ['outlet' => $goods]);
             }elseif ($req->has('exportPDF'))
             {
                 // select PDF
-                $PDFReport = DB::select("SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
+                $PDFReport = DB::select("SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP,fakturs.id FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
                 JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
-                JOIN goods ON goods.id = faktur_barangs.idBarang where namaOutlet='$from' order by fakturs.created_at asc");
+                JOIN goods ON goods.id = faktur_barangs.idBarang where namaOutlet='$from' and fakturs.tanggal between  '$awal' and '$akhir'");
                 
-                 view()->share('users',$PDFReport);  
+                 $pdf = App::make('snappy.pdf.wrapper');
+                 $pdf->loadView('laporan.o',compact('PDFReport'));
+                 return $pdf->download('invoice.pdf');
                 
                 
                 // $pdf = PDF::loadView('PDF_report', ['PDFReport' => $PDFReport])->setPaper('a4', 'landscape');
@@ -40,7 +49,7 @@ class LaporanController extends Controller
             }  
         else
         {
-            $ViewsPage = DB::select('SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
+            $ViewsPage = DB::select('SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP,fakturs.id FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
             JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
             JOIN goods ON goods.id = faktur_barangs.idBarang order by fakturs.created_at asc');
 
@@ -48,6 +57,44 @@ class LaporanController extends Controller
             }
     }
 
-     
+    public function update($id)
+    {
+        $ViewsPage = DB::select('SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP,fakturs.id FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
+        JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
+        JOIN goods ON goods.id = faktur_barangs.idBarang order by fakturs.created_at asc');
+
+        $goods = DB::table('outlets')->get();
+
+        $data = DB::select("SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP,fakturs.id,fakturs.tanggal,fakturs.diskon  FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
+        JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
+        JOIN goods ON goods.id = faktur_barangs.idBarang where fakturs.id= '$id' order by fakturs.created_at asc");
+        //  $ddd= $data[0]['grandTotal'];
+        // $dd=ter($data['grandTotal'],'rupiah','senilai'); // one million
+        $databarang = DB::select("SELECT goods.namaBarang,goods.satuan,faktur_barangs.qty,faktur_barangs.jumlah_harga,(faktur_barangs.qty*faktur_barangs.jumlah_harga) AS total FROM fakturs 
+        JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
+        JOIN goods ON goods.id = faktur_barangs.idBarang where fakturs.id= '$id'");
+        // ddd($data);
+    //    $pdf = App::make('snappy.pdf.wrapper');
+    //    $pdf->loadView('laporan.kwitansi',compact('data','databarang'));
+      
+        view('laporan.kwitansi',compact('data','databarang'));
+    }
+     public function cetak($id){
+        $ViewsPage = DB::select('SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP,fakturs.id FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
+        JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
+        JOIN goods ON goods.id = faktur_barangs.idBarang order by fakturs.created_at asc');
+
+        $goods = DB::table('outlets')->get();
+
+        $data = DB::select("SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP,fakturs.id,fakturs.tanggal,fakturs.diskon  FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
+        JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
+        JOIN goods ON goods.id = faktur_barangs.idBarang where fakturs.id= '$id' order by fakturs.created_at asc");
+        //  $ddd= $data[0]['grandTotal'];
+        // $dd=ter($data['grandTotal'],'rupiah','senilai'); // one million
+        $databarang = DB::select("SELECT goods.namaBarang,goods.satuan,faktur_barangs.qty,faktur_barangs.jumlah_harga,(faktur_barangs.qty*faktur_barangs.jumlah_harga) AS total FROM fakturs 
+        JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
+        JOIN goods ON goods.id = faktur_barangs.idBarang where fakturs.id= '$id'");
+        view('laporan.laporanCetak',compact('data','databarang'));
+     }
     
 }

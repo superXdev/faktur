@@ -22,6 +22,9 @@
                 <input disabled id="id" class="form-control" placeholder="-" value="{{ $data2}}">
               
                 </div>
+                
+                    
+                <input disabled id="tangg" class="form-control" placeholder="-" value="{{ date('Y-m-d')}}">
                 <div class="col-md-3">
                     <label for="">No Faktur</label>
                     <input disabled id="kodeFaktur" class="form-control" placeholder="-" value="{{ $ok }}" type="text">
@@ -334,6 +337,7 @@
         head['kodeFaktur'] = $("#kodeFaktur").val()
         head['tanggal'] = $("#tanggal").val()
         head['outlet'] = $("#outlet").val()
+        head['tanggal'] = $("#tangg").val()
 
         data.push(head)
         return data;

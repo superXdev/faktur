@@ -18,7 +18,8 @@ class Faktur extends Model
         'namaPengirim',
         'invoice',
         'namaPenerima',
-        'tanggalbuat'
+        'tanggalbuat',
+        'tanggal'
     ];
  
 }

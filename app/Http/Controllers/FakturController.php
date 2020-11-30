@@ -74,12 +74,14 @@ class FakturController extends Controller
         $idd = $request->data['head'][0]['id'];
         $diskon = $request->data['head'][0]['diskon'];
         $grandTotal = $request->data['head'][0]['grandTotal'];
+        $tanggal = $request->data['head'][0]['tanggal'];
 
         // insert fakturs
        $ok= DB::table('fakturs')->insert([
             'id' =>$idd,
             'diskon' =>$diskon,
             'grandTotal' =>$grandTotal,
+            'tanggal' =>$tanggal,
             'slug' => Str::kebab(auth()->user()->name).'-'.Str::random(10),
             'namaPengirim' => auth()->user()->name,
             'invoice' => $kodeFaktur,
