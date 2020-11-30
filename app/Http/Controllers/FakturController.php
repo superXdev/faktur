@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\App;
+use Carbon\Carbon;
+use Illuminate\Support\Carbon as SupportCarbon;
+
+use Barryvdh\Snappy\PdfWrapper;
+use App\Http\Controllers\PDF;
 class FakturController extends Controller
 {
     public function index()
@@ -53,8 +59,9 @@ class FakturController extends Controller
         // $goods = DB::table('goods')
         // ->join('goods', 'goods_prices.goods_id' ,'=', 'goods.id')
         // ->where('id', '=', $goodsId)->get();
-
-        $goods = DB::select("SELECT * FROM goods_prices JOIN goods ON goods.id = goods_prices.goods_id where goods.id = '$goodsId'");
+        
+        
+        $goods = DB::select("SELECT * FROM goods_prices JOIN goods ON goods.id = goods_prices.goods_id where goods.id = '$goodsId' and goods.stok >= goods.minStok ");
         // ddd($goods);
         return response()->json($goods);
     }
@@ -89,7 +96,6 @@ class FakturController extends Controller
         ]);
 
             
-        $data1 = Faktur::where('invoice', '=', $kodeFaktur)->select('id')->first();
 
         foreach($request->data['detailData'] as $data){
             DB::table('faktur_barangs')->insert([
@@ -100,10 +106,29 @@ class FakturController extends Controller
                 'HPP' => $data['totalmodal'],
                 'laba' => $data['laba']
             ]);
+
+         
+        }
+        foreach($request->data['detailData'] as $data){
+
+            DB::table('goods')->where('id','=',$data['id'])->decrement('stok',$data['qty']);
         }
 
-        
-        
+        $data = DB::select("SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP,fakturs.id,fakturs.tanggal,fakturs.diskon  FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
+        JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
+        JOIN goods ON goods.id = faktur_barangs.idBarang where fakturs.id= '$idd' order by fakturs.created_at asc");
+        //  $ddd= $data[0]['grandTotal'];
+        // $dd=ter($data['grandTotal'],'rupiah','senilai'); // one million
+        $databarang = DB::select("SELECT goods.namaBarang,goods.satuan,faktur_barangs.qty,faktur_barangs.jumlah_harga,(faktur_barangs.qty*faktur_barangs.jumlah_harga) AS total FROM fakturs 
+        JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
+        JOIN goods ON goods.id = faktur_barangs.idBarang where fakturs.id= ' $idd'");
+    //    return  view('laporan.fakturCetak',compact('data','databarang'));
+     
+       $pdf = App::make('snappy.pdf.wrapper');
+                 $pdf->loadView('laporan.fakturCetak',compact('data','databarang'));
+                  $pdf->download('faktur.pdf');
+      
+                
      }
 
 }

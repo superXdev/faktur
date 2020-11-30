@@ -19,12 +19,12 @@
             <div class="row">
                 <div class="col-md-3" hidden>
                     
-                <input disabled id="id" class="form-control" placeholder="-" value="{{ $data2}}">
+                <input  disabled id="id" class="form-control" placeholder="-" value="{{ $data2}}">
               
                 </div>
                 
                     
-                <input disabled id="tangg" class="form-control" placeholder="-" value="{{ date('Y-m-d')}}">
+                <input hidden disabled id="tangg" class="form-control" placeholder="-" value="{{ date('Y-m-d')}}">
                 <div class="col-md-3">
                     <label for="">No Faktur</label>
                     <input disabled id="kodeFaktur" class="form-control" placeholder="-" value="{{ $ok }}" type="text">
@@ -188,7 +188,7 @@
                     for(let i = 0; i < data.length; i++){
                         
                         $.get('/fakturGoods/' + data[i].goods_id, function(dataGoods){
-                            $('#goods').append(`<option value="${dataGoods[0].id}">${dataGoods[0].namaBarang}</option>`);
+                            $('#goods').append(`<option value="${dataGoods[0].id}">${dataGoods[0].namaBarang} (${dataGoods[0].stok})</option>`);
                         });
                     }
                 });
@@ -300,13 +300,20 @@
     }
 
     $('#save').on('click', function(event) {
-        
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1000
+        });
+
         const head = headJson();
         const detail = detailJson();
         const detailData = JSON.parse(detail);
         const combineData = {head,detailData};
        
         console.log(combineData);
+        
         $.ajax({
              method: 'POST',
              url:'{{ route('faktur.store') }}',
@@ -315,6 +322,12 @@
                 _token: $('[name="_token"]').val()
              },
              success:(res) => {
+                Toast.fire({
+           type: 'success',
+           title: 'Data updated.'
+            });
+        
+        // location.href('')
                 // console.log("success : ", res);
              },
              error:err => {
@@ -323,9 +336,6 @@
          }); 
     
     });
-
-
-     
 
     function headJson() {
         var data = [];

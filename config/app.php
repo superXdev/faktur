@@ -181,6 +181,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
         Riskihajar\Terbilang\TerbilangServiceProvider::class,
+        Tuta\Terbilang\TerbilangServiceProvider::class,
 
 
     ],

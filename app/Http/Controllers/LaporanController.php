@@ -94,7 +94,12 @@ class LaporanController extends Controller
         $databarang = DB::select("SELECT goods.namaBarang,goods.satuan,faktur_barangs.qty,faktur_barangs.jumlah_harga,(faktur_barangs.qty*faktur_barangs.jumlah_harga) AS total FROM fakturs 
         JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
         JOIN goods ON goods.id = faktur_barangs.idBarang where fakturs.id= '$id'");
-        view('laporan.laporanCetak',compact('data','databarang'));
+    //    return  view('laporan.fakturCetak',compact('data','databarang'));
+
+       $pdf = App::make('snappy.pdf.wrapper');
+                 $pdf->loadView('laporan.fakturCetak',compact('data','databarang'));
+                 return $pdf->download('faktur.pdf');
+                
      }
     
 }

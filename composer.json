@@ -22,6 +22,7 @@
         "livewire/livewire": "^2.0",
         "realrashid/sweet-alert": "^3.1",
         "riskihajar/terbilang": "^1.2",
+        "tuta/terbilang": "9999999-dev",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
@@ -46,7 +47,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/terbilang.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
