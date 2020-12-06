@@ -121,9 +121,21 @@
             </div>
             <div style="position: relative; left: 91%;">
                 <button class="btn save" id="save"><i class="fa fa-save"></i> Simpan</button>
-            </div>
+           
             
-            
+            <div style=" left: 71%;">
+                <form action="{{ route('faktur.faktur') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    
+                <input hidden  type="text" id="idds" class="form-control" placeholder="-" value="{{ $data2}}" name="oks">
+            <button class="btn cetak" id="cetak"><i class="fa fa-print" ></i> Cetak</button>
+                </form>
+             </div>
+             <div style=" left: 71%;">
+                 
+               <button class="btn clear" id="clear"><i class="fa fa-eraser" ></i>Perbarui Faktur </button>
+          
+             </div>
             
             
 
@@ -234,17 +246,16 @@
         var totalmodal = qty * hargamodal
         var laba = totalHarga - totalmodal
         
-        var namaBarang = $('#goods option:selected').text()
         
         var tr = '<tr>' +
             '<td hidden>' +
                 '<label for="">'+ laba +'</label>' +
             '</td>' +
             '<td hidden>' +
-                '<label for="">'+ totalmodal +'</label>' +
+                '<label for="">'+ totalHarga +'</label>' +
             '</td>' +
             '<td hidden>' +
-                '<label for="">'+ HPP +'</label>' +
+                '<label for="">'+ totalmodal +'</label>' +
             '</td>' +
             '<td hidden>' +
                 '<label for="">'+ id +'</label>' +
@@ -299,14 +310,15 @@
         }
     }
 
+    $('#clear').on('click', function(event) {
+    
+        location.reload();
+        
+        $('#save').attr("disabled", true);	
+    
+    });
     $('#save').on('click', function(event) {
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 1000
-        });
-
+        
         const head = headJson();
         const detail = detailJson();
         const detailData = JSON.parse(detail);
@@ -322,11 +334,14 @@
                 _token: $('[name="_token"]').val()
              },
              success:(res) => {
-                Toast.fire({
-           type: 'success',
-           title: 'Data updated.'
-            });
-        
+                 
+        $('#save').attr("disabled", true);	
+        Swal.fire(
+                        'Faktur!',
+                        'faktur berhasil di simpan.',
+                        'success'
+                    );
+
         // location.href('')
                 // console.log("success : ", res);
              },
@@ -336,6 +351,8 @@
          }); 
     
     });
+    
+    
 
     function headJson() {
         var data = [];

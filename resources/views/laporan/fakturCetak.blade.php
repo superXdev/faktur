@@ -177,26 +177,21 @@ tr:hover .cut { opacity: 1; }
                     <td>Jl.Menado No.2</td>
 					<td >Faktur No :</td>
 					
-                    @foreach ($data as $V)
-					<td>{{ $V->invoice }}</td>	
-					@endforeach
+					<td>{{ $data->invoice }}</td>	
+				
 
                 </tr>
                 <tr>
                     <td>Hp.081284598219</td>
                     <td>Tanggal :</td>	
-                    @foreach ($data as $V)
-					<td>{{ $V->tanggal }}</td>	
-					@endforeach
+					<td>{{ $data->tanggal }}</td>	
 
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
 					<td>Pelanggan :</td>
-					@foreach ($data as $V)
-					<td>{{ $V->namaOutlet }}</td>	
-					@endforeach
+					<td>{{ $data->namaOutlet }}</td>	
 
                 </tr>
 
@@ -226,8 +221,8 @@ tr:hover .cut { opacity: 1; }
 						<td><span contenteditable>{{ $V->namaBarang }}</span></td>
 						<td><center>{{ $V->qty }}({{ $V->satuan }})</center></td>
 						
-						<td><center>Rp.{{ 	number_format($V->jumlah_harga,0, ',' , '.') }}</center></td>
-						<td><center>Rp{{ 	number_format($V->total,0, ',' , '.') }}</center></td>
+						<td><center>Rp.{{ 	number_format($V->hargaJual,0, ',' , '.') }}</center></td>
+						<td><center>Rp{{ 	number_format($V->jumlah_harga,0, ',' , '.') }}</center></td>
 					</tr>
 					@endforeach
 				</tbody>
@@ -240,21 +235,19 @@ tr:hover .cut { opacity: 1; }
 				<tr>
 					<th><span contenteditable>Diskon</span></th>
 					
-                    @foreach ($data as $V)
-					<td><span data-prefix></span><span contenteditable>Rp.{{ 	number_format($V->diskon,0, ',' , '.') }}</span></td>
-					@endforeach
+					<td><span data-prefix></span><span contenteditable>Rp.{{ 	number_format($data->diskon,0, ',' , '.') }}</span></td>
+					
 				</tr>
 				<tr>
 					<th><span contenteditable>Total</span></th>
 						
-                    @foreach ($data as $V)
-					<td><span data-prefix></span><span contenteditable>Rp.{{ 	number_format($V->grandTotal,0, ',' , '.') }}</span></td>
-					@endforeach
+					<td><span data-prefix></span><span contenteditable>Rp.{{ 	number_format($data->grandTotal,0, ',' , '.') }}</span></td>
+					
 				</tr>
 			</table>
 			<table>
 				<tr>
-					<td>Terbilang : {{ terbilang($V->grandTotal) }}</td>
+					<td>Terbilang : {{ terbilang($data->grandTotal) }}</td>
 					<td></td>
 				</tr>
 			</table>

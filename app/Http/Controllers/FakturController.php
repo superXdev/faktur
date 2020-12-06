@@ -14,7 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Carbon as SupportCarbon;
 
 use Barryvdh\Snappy\PdfWrapper;
-use App\Http\Controllers\PDF;
+use PDF;
 class FakturController extends Controller
 {
     public function index()
@@ -114,21 +114,69 @@ class FakturController extends Controller
             DB::table('goods')->where('id','=',$data['id'])->decrement('stok',$data['qty']);
         }
 
-        $data = DB::select("SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP,fakturs.id,fakturs.tanggal,fakturs.diskon  FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
-        JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
-        JOIN goods ON goods.id = faktur_barangs.idBarang where fakturs.id= '$idd' order by fakturs.created_at asc");
-        //  $ddd= $data[0]['grandTotal'];
-        // $dd=ter($data['grandTotal'],'rupiah','senilai'); // one million
-        $databarang = DB::select("SELECT goods.namaBarang,goods.satuan,faktur_barangs.qty,faktur_barangs.jumlah_harga,(faktur_barangs.qty*faktur_barangs.jumlah_harga) AS total FROM fakturs 
-        JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
-        JOIN goods ON goods.id = faktur_barangs.idBarang where fakturs.id= ' $idd'");
-    //    return  view('laporan.fakturCetak',compact('data','databarang'));
+        
+    //     $data = DB::select("SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP,fakturs.id,fakturs.tanggal,fakturs.diskon  FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
+    //     JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
+    //     JOIN goods ON goods.id = faktur_barangs.idBarang where fakturs.id= '$idd' order by fakturs.created_at asc");
+    //     //  $ddd= $data[0]['grandTotal'];
+    //     // $dd=ter($data['grandTotal'],'rupiah','senilai'); // one million
+    //     $databarang = DB::select("SELECT goods.namaBarang,goods.satuan,faktur_barangs.qty,faktur_barangs.jumlah_harga,(faktur_barangs.qty*faktur_barangs.jumlah_harga) AS total FROM fakturs 
+    //     JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
+    //     JOIN goods ON goods.id = faktur_barangs.idBarang where fakturs.id= ' $idd'");
+    // //    return  view('laporan.fakturCetak',compact('data','databarang'));
      
-       $pdf = App::make('snappy.pdf.wrapper');
-                 $pdf->loadView('laporan.fakturCetak',compact('data','databarang'));
-                  $pdf->download('faktur.pdf');
+    //    $pdf = App::make('snappy.pdf.wrapper');
+    //              $pdf->loadView('laporan.fakturCetak',compact('data','databarang'));
+    //               $pdf->download('faktur.pdf');
       
                 
      }
+     public function faktur(Request $request)
+     {
+        
+        $idd = $request->oks;
+        
+        // $data = DB::select("SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP,fakturs.id,fakturs.tanggal,fakturs.diskon  FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
+        //  JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
+        //  JOIN goods ON goods.id = faktur_barangs.idBarang where fakturs.id= '$idd' order by fakturs.created_at asc");
+         $data = DB::table('outlets')->join('fakturs','fakturs.outlet_id','=','outlets.id')
+         ->join('faktur_barangs','faktur_barangs.faktur_id','=','fakturs.invoice')
+         ->join('goods','goods.id','=','faktur_barangs.idBarang')
+         ->select('outlets.namaOutlet','fakturs.invoice','fakturs.grandTotal','faktur_barangs.laba','faktur_barangs.HPP','fakturs.id','fakturs.tanggal','fakturs.diskon')
+         ->where('fakturs.id','=',$idd)->first();
+
+            $databarang = DB::select("  SELECT goods.namaBarang,goods.satuan,faktur_barangs.qty,goods_prices.hargaJual,faktur_barangs.jumlah_harga FROM fakturs 
+            JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
+            JOIN goods ON goods.id = faktur_barangs.idBarang 
+             JOIN goods_prices ON goods_prices.goods_id = goods.id  WHERE fakturs.id='$idd' GROUP BY faktur_barangs.id");
+         
+        //  return view('faktur.fakturView',compact('data','databarang'));
+        //    $pdf = App::make('dompdf.wrapper');
+        //              $pdf->loadView('faktur.fakturView',compact('data','databarang'));
+        //              return $pdf->download('faktur.pdf');
+                    // $path = public_path('pdf/');
+                    // $fileName = time().'.'.'pdf';
+                    // $pdf->save($path.'pdf/'.$fileName);
+                    // return response()->download($pdf);
+
+                    
+       $pdf = App::make('snappy.pdf.wrapper');
+                 $pdf->loadView('faktur.fakturView',compact('data','databarang'))->setPaper('a4', 'portrait');
+                 return $pdf->download('faktur.pdf');
+
+                 
+    //    $pdf = App::make('snappy.pdf.wrapper');
+    //    $pdf->loadView('faktur.fakturView',compact('data','databarang'));
+    //    return $pdf->download('faktur.pdf');
+    //    return  view('faktur.fakturView',compact('data','databarang'));
+                //  $pdf = PDF::loadView('faktur.fakturView',compact('data','databarang'));
+                //  PDF::loadView('faktur.fakturView',compact('data','databarang')->setWarnings(false)->save('myfile.pdf');
+                //  PDF::loadView('faktur.fakturView',compact('data','databarang'))->setPaper('a4', 'landscape')->setWarnings(false)->save('myfile.pdf');
+                //  return $pdf->download('faktur.pdf');
+               
+
+
+     }
+     
 
 }

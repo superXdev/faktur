@@ -57,12 +57,13 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::view('/user/new', "pages.user.user-new")->name('user.new');
     Route::view('/user/edit/{userId}', "pages.user.user-edit")->name('user.edit');
 
-    Route::get('/faktur', [FakturController::class, "index"])->name('faktur.index');
+    Route::get('/faktu', [FakturController::class, "index"])->name('faktur.index');
     Route::get('/faktur/{id}', [FakturController::class, "getOutlet"]);
     Route::get('/fakturJenis/{jenisOutlet}', [FakturController::class, "getJenis"]);
     Route::get('/fakturGoods/{goodsId}', [FakturController::class, "getGoods"]);
     Route::get('/faktur/create', [FakturController::class, "create"]);
     Route::post('/faktur/store', [FakturController::class, "store"])->name('faktur.store');
+    Route::post('/faktur/ceta', [FakturController::class, "faktur"])->name('faktur.faktur');
 
     //ROute Laporan
     Route::get('/laporan', [LaporanController::class, "index"])->name('laporan.index');
