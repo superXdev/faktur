@@ -22,28 +22,51 @@ class LaporanController extends Controller
         $from = $req->input('jenisOutlet');
         $awal = $req->input('awal');
         $akhir = $req->input('akhir');
-        
+        $cek = $req->input('sitem');
             $to   = $req->input('periode');
             if ($req->has('search'))
             {
+                if($cek){
+                    $ViewsPage = DB::select("SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP,fakturs.id FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
+                    JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
+                    JOIN goods ON goods.id = faktur_barangs.idBarang where  fakturs.tanggal between  '$awal' and '$akhir'");
+                   
+                    return view('laporan.laporanView',compact('ViewsPage'), ['outlet' => $goods]);
+                    
+                }else{
+                    $ViewsPage = DB::select("SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP,fakturs.id FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
+                    JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
+                    JOIN goods ON goods.id = faktur_barangs.idBarang where namaOutlet='$from' and fakturs.tanggal between  '$awal' and '$akhir'");
+                   
+                    return view('laporan.laporanView',compact('ViewsPage'), ['outlet' => $goods]);
+                    
+                }
                 // select search
                 
-                $ViewsPage = DB::select("SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP,fakturs.id FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
-                JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
-                JOIN goods ON goods.id = faktur_barangs.idBarang where namaOutlet='$from' and fakturs.tanggal between  '$awal' and '$akhir'");
-                return view('laporan.laporanView',compact('ViewsPage'), ['outlet' => $goods]);
+               
             }elseif ($req->has('exportPDF'))
             {
-                // select PDF
-                $PDFReport = DB::select("SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP,fakturs.id FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
+                if($cek){
+                    $PDFReport = DB::select("SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP,fakturs.id FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
                 JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
-                JOIN goods ON goods.id = faktur_barangs.idBarang where namaOutlet='$from' and fakturs.tanggal between  '$awal' and '$akhir'");
+                JOIN goods ON goods.id = faktur_barangs.idBarang where fakturs.tanggal between  '$awal' and '$akhir'");
                 
                  $pdf = App::make('snappy.pdf.wrapper');
                  $pdf->loadView('laporan.o',compact('PDFReport'));
                  return $pdf->download('invoice.pdf');
-                
-                
+                }else{
+                    $PDFReport = DB::select("SELECT outlets.namaOutlet,fakturs.invoice,fakturs.grandTotal,faktur_barangs.laba,faktur_barangs.HPP,fakturs.id FROM outlets JOIN fakturs ON fakturs.outlet_id = outlets.id
+                    JOIN faktur_barangs ON faktur_barangs.faktur_id = fakturs.invoice
+                    JOIN goods ON goods.id = faktur_barangs.idBarang where namaOutlet='$from' and fakturs.tanggal between  '$awal' and '$akhir'");
+                    
+                     $pdf = App::make('snappy.pdf.wrapper');
+                     $pdf->loadView('laporan.o',compact('PDFReport'));
+                     return $pdf->download('invoice.pdf');
+                    
+                    
+                }
+                // select PDF
+           
                 // $pdf = PDF::loadView('PDF_report', ['PDFReport' => $PDFReport])->setPaper('a4', 'landscape');
                 // return $pdf->download('PDF-report.pdf');
             }  
@@ -102,6 +125,35 @@ class LaporanController extends Controller
                  $pdf->loadView('laporan.fakturCetak',compact('data','databarang'));
                  return $pdf->download('faktur.pdf');
                 
+     }
+     public function cetakall()
+     {
+        $stokall = DB::table('goods')
+        ->select('kodeBarang','namaBarang','stok','minStok')
+        ->get();
+        $pdf = App::make('snappy.pdf.wrapper');
+        $pdf->loadView('barang.barangstokAll',compact('stokall'));
+        return $pdf->download('stok.pdf');
+     }
+     public function cetakdanger()
+     {
+        $stokall = DB::table('goods')
+        ->select('kodeBarang','namaBarang','stok','minStok')
+        ->whereRaw('stok<= minStok')
+        ->get();
+        $pdf = App::make('snappy.pdf.wrapper');
+        $pdf->loadView('barang.barangstokDanger',compact('stokall'));
+        return $pdf->download('stokdanger.pdf');
+     }
+     public function cetaksafe()
+     {
+        $stokall = DB::table('goods')
+        ->select('kodeBarang','namaBarang','stok','minStok')
+        ->whereRaw('stok>= minStok')
+        ->get();
+        $pdf = App::make('snappy.pdf.wrapper');
+        $pdf->loadView('barang.barangstokSafe',compact('stokall'));
+        return $pdf->download('stoksafe.pdf');
      }
     
 }

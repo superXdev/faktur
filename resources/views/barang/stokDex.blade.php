@@ -10,6 +10,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+                <div class="card-header">
+                    <a type="button" href="{{ route('laporan.cetakall') }}" class="btn btn-sm btn-info ">Cetak Barang Stok all</a> 
+                    <a type="button" href="{{ route('laporan.cetakdanger') }}" class="btn btn-sm btn-danger ">Cetak Barang Stok Danger</a>
+                    <a type="button" href="{{ route('laporan.cetaksafe') }}" class="btn btn-sm btn-success ">Cetak Barang Stok Safe</a>
+          
+                </div>
                 <div class="card-body p-0" style="margin-top: 15px; margin-left: 15px; margin-right: 15px; margin-bottom: 10px">
                     <div class="table-responsive">
                         <table class="table" id="supplierTable">

@@ -45,6 +45,33 @@
                         <a class="btn btn-info" href="{{ route('barang.edit', $data->slug) }}">Perbarui</a>
                     </div>
                 </div>
+            
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">Harga Modal</th>
+                                <th scope="col">Tanggal di Perbarui</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach( $goodPriceHistory as $h )
+                                <tr>
+                                    <td class="h5">
+                                        {{ $h->hargaModal }}
+                                    </td>
+                                    <td class="h5">
+                                        {{ $h->created_at }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-6">

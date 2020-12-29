@@ -69,6 +69,14 @@
             <li class="{{ Request::routeIs('laporan.*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('laporan.index') }}"><i class="fas fa-exchange-alt"></i><span>Buat Laporan</span></a>
             </li>
+            <li class="menu-header">Pengeluaran Kotor</li>
+            <li class="{{ Request::routeIs('pengeluarankotorr.*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('pengeluarankotorr.index') }}"><i class="fas fa-exchange-alt"></i><span>Pengeluaran Kotor</span></a>
+            </li>
+            <li class="menu-header">Laporan Stok Masuk</li>
+            <li class="{{ Request::routeIs('lapMasuk.*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('lapMasuk.index') }}"><i class="fas fa-exchange-alt"></i><span>Laporan Stok Masuk</span></a>
+            </li>
 
 
 {{--            <li class="menu-header">User</li>--}}

@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Faktur;
-use App\Models\Goods;
+use App\Exports\FakturExport;
 use App\Models\Outlet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\App;
 use Carbon\Carbon;
-use Illuminate\Support\Carbon as SupportCarbon;
-
-use Barryvdh\Snappy\PdfWrapper;
+use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 class FakturController extends Controller
 {
@@ -52,6 +48,13 @@ class FakturController extends Controller
         ->where('jenisOutlet', '=', $jenis)->get();
         
         return response()->json($goodsPrice);
+    }
+
+    public function getStok($id)
+    {
+        $goods= DB::table('goods')->where('id', '=', $id)->get();
+
+        return response()->json($goods[0]);
     }
 
     public function getGoods($goodsId)
@@ -158,10 +161,11 @@ class FakturController extends Controller
                     // $fileName = time().'.'.'pdf';
                     // $pdf->save($path.'pdf/'.$fileName);
                     // return response()->download($pdf);
-
+        // return view('faktur.fakturView',compact('data','databarang'));
                     
        $pdf = App::make('snappy.pdf.wrapper');
-                 $pdf->loadView('faktur.fakturView',compact('data','databarang'))->setPaper('a4', 'portrait');
+                 $pdf->loadView('faktur.fakturView',compact('data','databarang'))->setPaper('a5', 'landscape')->setOption('margin-bottom', '0mm');
+   
                  return $pdf->download('faktur.pdf');
 
                  
@@ -177,6 +181,13 @@ class FakturController extends Controller
 
 
      }
+  
+     public function excel () 
+     {
+         
+        return Excel::download(new FakturExport(), 'users.xlsx');  
+ 
      
+     }
 
 }

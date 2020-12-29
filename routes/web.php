@@ -6,7 +6,9 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OutletController;
 use App\Http\Controllers\GoodsController;
+use App\Http\Controllers\lapMasuk;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PengeluaranKotorrController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +62,7 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::get('/faktu', [FakturController::class, "index"])->name('faktur.index');
     Route::get('/faktur/{id}', [FakturController::class, "getOutlet"]);
     Route::get('/fakturJenis/{jenisOutlet}', [FakturController::class, "getJenis"]);
+    Route::get('/fakturStok/{id}', [FakturController::class, "getStok"]);
     Route::get('/fakturGoods/{goodsId}', [FakturController::class, "getGoods"]);
     Route::get('/faktur/create', [FakturController::class, "create"]);
     Route::post('/faktur/store', [FakturController::class, "store"])->name('faktur.store');
@@ -72,5 +75,15 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::post('/laporan/invoice', [LaporanController::class, "update"])->name('laporan.update');
     
     Route::get('/kwitansi/cetak/{id}', [LaporanController::class, "cetak"])->name('laporan.cetak');
+    Route::get('/laporan/stok',[LaporanController::class, "cetakall"])->name('laporan.cetakall');
+    Route::get('/laporan/stokdanger',[LaporanController::class, "cetakdanger"])->name('laporan.cetakdanger');
+    Route::get('/laporan/stoksafe',[LaporanController::class, "cetaksafe"])->name('laporan.cetaksafe');
+   
+    Route::get('/PengeluaranKotor',[PengeluaranKotorrController::class, "index"])->name('pengeluarankotorr.index');
+    Route::post('/PengeluaranKotor/store',[PengeluaranKotorrController::class, "store"])->name('pengeluarankotorr.store');
+    Route::get('/PengeluaranKotor/list-PengeluaranKotor', [PengeluaranKotorrController::class, "getGoods1"])->name('pengeluarankotorr.getList');
+    Route::get('/LapMasuk', [lapMasuk::class, "index"])->name('lapMasuk.index');
+    Route::get('/faktur/excel/', [FakturController::class, "excel"])->name('faktur.excel');
 
+   
 });

@@ -182,6 +182,7 @@ return [
         Barryvdh\Snappy\ServiceProvider::class,
         Riskihajar\Terbilang\TerbilangServiceProvider::class,
         Tuta\Terbilang\TerbilangServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
 
     ],
@@ -240,6 +241,7 @@ return [
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
 'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 'Terbilang' => Riskihajar\Terbilang\Facades\Terbilang::class,
+'Excel'=>Maatwebsite\Excel\Facedes\Excel::class,
     ],
 
 ];

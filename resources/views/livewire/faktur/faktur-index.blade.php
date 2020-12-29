@@ -11,6 +11,8 @@
         top: 17px;
     }
 </style>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <div>
     {{-- Do your work, then step back. --}}
     
@@ -98,7 +100,7 @@
                         <tr>
                             <td colspan="3"></td>
                             <td>Sub Total</td>
-                            <td id="totalHarga"></td>
+                            <td id="totalHarga">0</td>
                             <td></td>
                         </tr>
                         <tr>
@@ -112,7 +114,7 @@
                         <tr>
                             <td colspan="3"></td>
                             <td>Grand Total</td>
-                            <td id="grandTotal"  name="grandTotal" ></td>
+                            <td id="grandTotal"  name="grandTotal" >0</td>
                             <td></td>
                         </tr>
                     </tfoot>
@@ -148,6 +150,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 <script language="JavaScript" type="text/JavaScript">
+
 
     let dataOutlet = null;
     let dataJenis = null;
@@ -194,6 +197,7 @@
                 $('#namaOutlet').val(namaOutlet);
                 $('#alamatOutlet').val(alamatOutlet);
                 $('#jenisOutlet').val(jenisOutlet);
+
                 $.get('/fakturJenis/' + dataOutlet['jenisOutlet'], function(data){
                     dataJenis = data;
                     console.log(data);
@@ -202,8 +206,10 @@
                         $.get('/fakturGoods/' + data[i].goods_id, function(dataGoods){
                             $('#goods').append(`<option value="${dataGoods[0].id}">${dataGoods[0].namaBarang} (${dataGoods[0].stok})</option>`);
                         });
+
                     }
                 });
+
             });
         });
     });
@@ -232,7 +238,7 @@
     });
 
     function addRow() {            
-        
+
         var idBarang = $('#goods option:selected').val()
         var id = $('#id').val()
         var qty = $("#qty").val()
@@ -241,59 +247,118 @@
         var HPP = $("#hargamodal").val()
         console.log(HPP);
 
-        var namaBarang = $('#goods option:selected').text()
+        var namaBarang = $('#goods option:selected').text().trim()
         var totalHarga = qty * harga
         var totalmodal = qty * hargamodal
         var laba = totalHarga - totalmodal
-        
-        
-        var tr = '<tr>' +
-            '<td hidden>' +
-                '<label for="">'+ laba +'</label>' +
-            '</td>' +
-            '<td hidden>' +
-                '<label for="">'+ totalHarga +'</label>' +
-            '</td>' +
-            '<td hidden>' +
-                '<label for="">'+ totalmodal +'</label>' +
-            '</td>' +
-            '<td hidden>' +
-                '<label for="">'+ id +'</label>' +
-            '</td>' +
-            '<td hidden>' +
-                '<label for="">'+ idBarang +'</label>' +
-            '</td>' +
-            '<td >' +
-                '<label for="">'+ namaBarang +'</label>' +
-            '</td>' +
-         
-         
-            '<td>' +
-                '<label for="">'+ qty +'</label>' +
-            '</td>' +
-            '<td>' +
-                '<label for="">'+ harga +'</label>' +
-            '</td>' +
-            '<td>' +
-                '<label for="" id="jumlahHarga">'+ totalHarga +'</label>' +
-            '</td>' +
-            '<td>' +
-                '<button class="btn" id="deleteRow"><i class="fa fa-trash"></i></button>' +
-            '</td>' +
-            '</tr>';
-        $('table tbody').append(tr).last();
-        
-        document.getElementById("qty").value = "";
-        
-        var TotalValue = 0;
 
-        $("tbody tr #jumlahHarga").each(function(index,value){
-            currentRow = parseFloat($(this).text());
-            TotalValue += currentRow
+        let stok = namaBarang.split(' ');
+        stok =  stok[stok.length-1].replace('(', '').replace(')','');
+        
+        if(parseInt(qty) > parseInt(stok)){
+            Swal.fire(
+                        'Faktur!',
+                        'jumlah melebihi stok',
+                        'error'
+                    );
+            return;
+        }
+        
+        let stopped = false;
+        $('#tableGoods tbody tr').each(function(){
+            let self = $(this);
+            if(self.find("td:eq(5)").text().trim() == namaBarang){
+                let new_laba = parseInt(self.find("td:eq(0)").text().trim()) + parseInt(laba);
+                let new_totalHarga = parseInt(self.find("td:eq(1)").text().trim()) + parseInt(totalHarga);
+                let new_totalmodal = parseInt(self.find("td:eq(2)").text().trim()) + parseInt(totalmodal);
+                let new_qty = parseInt(self.find("td:eq(6)").text().trim()) + parseInt(qty);
+
+                if(new_qty > parseInt(stok)){
+                    Swal.fire(
+                        'Faktur!',
+                        'jumlah melebihi stok',
+                        'error'
+                    );
+                } else {
+                    self.find("td:eq(0)").text(new_laba);
+                    self.find("td:eq(1)").text(new_totalHarga);
+                    self.find("td:eq(2)").text(new_totalmodal);
+                    self.find("td:eq(6)").text(new_qty);
+                    self.find("td:eq(8)").text(new_totalHarga);
+
+                    let rest = parseInt($('#totalHarga').text()) + totalHarga;
+        
+        
+
+                    // $("tbody tr #jumlahHarga").each(function(index,value){
+                    //     currentRow = parseFloat($(this).text());
+                    //     TotalValue += currentRow
+                    // });
+
+                    document.getElementById('totalHarga').innerHTML = rest;
+                    document.getElementById('grandTotal').innerHTML = rest;
+                }
+                
+
+                stopped = true;
+            }
         });
 
-        document.getElementById('totalHarga').innerHTML = TotalValue;
-        document.getElementById('grandTotal').innerHTML = TotalValue;
+        if(!stopped){
+            var tr = '<tr>' +
+                '<td hidden>' +
+                    '<label for="">'+ laba +'</label>' +
+                '</td>' +
+                '<td hidden>' +
+                    '<label for="">'+ totalHarga +'</label>' +
+                '</td>' +
+                '<td hidden>' +
+                    '<label for="">'+ totalmodal +'</label>' +
+                '</td>' +
+                '<td hidden>' +
+                    '<label for="">'+ id +'</label>' +
+                '</td>' +
+                '<td hidden>' +
+                    '<label for="">'+ idBarang +'</label>' +
+                '</td>' +
+                '<td >' +
+                    '<label for="">'+ namaBarang +'</label>' +
+                '</td>' +
+             
+             
+                '<td>' +
+                    '<label for="">'+ qty +'</label>' +
+                '</td>' +
+                '<td>' +
+                    '<label for="">'+ harga +'</label>' +
+                '</td>' +
+                '<td>' +
+                    '<label for="" id="jumlahHarga">'+ totalHarga +'</label>' +
+                '</td>' +
+                '<td>' +
+                    '<button class="btn" id="deleteRow"><i class="fa fa-trash"></i></button>' +
+                '</td>' +
+                '</tr>';
+            $('table tbody').append(tr).last();
+
+            let rest = parseInt($('#totalHarga').text()) + totalHarga;
+        
+        
+
+            // $("tbody tr #jumlahHarga").each(function(index,value){
+            //     currentRow = parseFloat($(this).text());
+            //     TotalValue += currentRow
+            // });
+
+            document.getElementById('totalHarga').innerHTML = rest;
+            document.getElementById('grandTotal').innerHTML = rest; 
+        }
+        
+        
+        
+        document.getElementById("qty").value = "";
+
+        
 
         disabledInput()
     };

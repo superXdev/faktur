@@ -121,4 +121,5 @@ class GoodsStocksController extends Controller
             ->rawColumns([ 'tambah', 'created_at'])
             ->make(true);
     }
+   
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GoodPriceHistory;
 use App\Models\Goods;
 use App\Models\GoodsFirstStock;
 use Illuminate\Http\Request;
@@ -56,7 +57,13 @@ class GoodsController extends Controller
 
         Goods::create($form_data);
 
-        $slug = DB::table('goods')->select('slug')->where('kodeBarang', '=', $request->kodeBarang)->first();
+        $slug = DB::table('goods')->select('slug', 'id')->where('kodeBarang', '=', $request->kodeBarang)->first();
+
+        GoodPriceHistory::create([
+            'goods_id' => $slug->id,
+            'hargaModal' => $request->hargaModal
+        ]);
+
         toast('Barang ditambahkan!','success')->position('top-end');
         return redirect()->route('barang.view', $slug->slug);
     }
@@ -68,7 +75,11 @@ class GoodsController extends Controller
             ->select('stokAwal', 'created_at')
             ->where('goods_id', '=', $data->id)
             ->first();
-        return view('barang.barangView', compact('data', 'stokAwal'));
+        $goodPriceHistory = DB::table('good_price_histories')
+            ->where('goods_id', '=', $data->id)
+            ->orderByDesc('created_at')->get();
+            
+        return view('barang.barangView', compact('data', 'stokAwal','goodPriceHistory'));
     }
 
     public function edit($slug)
@@ -79,6 +90,11 @@ class GoodsController extends Controller
 
     public function update(Request $request, $slug)
     {
+        $hargaModal = DB::table('goods')
+        ->select('hargaModal')
+        ->where('slug', '=', $slug)
+        ->first();
+
         $form_data = array(
             'slug' => Str::kebab($request->namaBarang).'-'.Str::random(10),
             'kodeBarang' => $request->kodeBarang,
@@ -88,10 +104,27 @@ class GoodsController extends Controller
             'satuan' => $request->satuan
         );
 
-        Goods::where('slug', $slug)->update($form_data);
-        $slugNew = DB::table('goods')->select('slug')->where('kodeBarang', '=', $request->kodeBarang)->first();
-        toast('Barang berhasil di perbarui!','success')->position('top-end');
-        return redirect()->route('barang.view', $slugNew->slug);
+        if($hargaModal->hargaModal == $request->hargaModal)
+        {
+
+            Goods::where('slug', $slug)->update($form_data);
+            $slugNew = DB::table('goods')->select('slug', 'id')->where('kodeBarang', '=', $request->kodeBarang)->first();
+
+            toast('Barang berhasil di perbarui!','success')->position('top-end');
+            return redirect()->route('barang.view', $slugNew->slug);
+        } else {
+        
+            Goods::where('slug', $slug)->update($form_data);
+            $slugNew = DB::table('goods')->select('slug', 'id')->where('kodeBarang', '=', $request->kodeBarang)->first();
+
+            GoodPriceHistory::create([
+                'goods_id' => $slugNew->id,
+                'hargaModal' => $request->hargaModal
+            ]);
+
+            toast('Barang dan Harga Modal berhasil di perbarui!','success')->position('top-end');
+            return redirect()->route('barang.view', $slugNew->slug);
+        }
     }
 
     public function firstStock(Request $request)
