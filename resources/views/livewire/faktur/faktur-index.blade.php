@@ -11,7 +11,6 @@
         top: 17px;
     }
 </style>
-
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <div>
     {{-- Do your work, then step back. --}}
@@ -148,7 +147,7 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.3.2/select2.min.js"></script>
 <script language="JavaScript" type="text/JavaScript">
 
 
@@ -212,12 +211,13 @@
 
             });
         });
+        $('#goods').select2();
     });
 
-    $('#goods').on('change', function(e){
-        var idBarang = $('#goods option:selected').val()
-       
-        var cariHarga = dataJenis.filter(x => x.goods_id == idBarang)
+    $('#goods').change(function(e){
+        var idBarang = $('#goods').val();
+        console.log(idBarang);
+        var cariHarga = dataJenis.filter(x => x.goods_id == idBarang);
         hargaBarang = cariHarga[0].hargaJual;
         hargamodal = cariHarga[0].hargaModal;
         $('#harga').val(hargaBarang);
@@ -225,10 +225,23 @@
 
     });
 
+    function cariHarga(idBarang) {
+        var cariHarga = dataJenis.filter(x => x.goods_id == idBarang);
+        hargaBarang = cariHarga[0].hargaJual;
+        hargamodal = cariHarga[0].hargaModal;
+        $('#harga').val(hargaBarang);
+        $('#hargamodal').val(hargamodal);
+    }
+
     $("#tableGoods").on("click", "#deleteRow", function() {
         $(this).closest("tr").remove();
         var TotalValue = 0;
+        let totalHarga = parseInt($(this).closest("tr").find('.jH').html());
+        let grandTotal = parseInt($('#grandTotal').html());
+        let finalHarga = grandTotal - totalHarga;
 
+        document.getElementById('totalHarga').innerHTML = finalHarga;
+        document.getElementById('grandTotal').innerHTML = finalHarga;
     });
 
 
@@ -239,13 +252,14 @@
 
     function addRow() {            
 
-        var idBarang = $('#goods option:selected').val()
+        var idBarang = $('#goods').val()
+        cariHarga(idBarang)
         var id = $('#id').val()
         var qty = $("#qty").val()
         var goods = $("#goods").val()
         var harga = $("#harga").val()
         var HPP = $("#hargamodal").val()
-        console.log(HPP);
+        // console.log(idBarang);
 
         var namaBarang = $('#goods option:selected').text().trim()
         var totalHarga = qty * harga
@@ -333,7 +347,7 @@
                     '<label for="">'+ harga +'</label>' +
                 '</td>' +
                 '<td>' +
-                    '<label for="" id="jumlahHarga">'+ totalHarga +'</label>' +
+                    '<label for="" id="jumlahHarga" class="jH">'+ totalHarga +'</label>' +
                 '</td>' +
                 '<td>' +
                     '<button class="btn" id="deleteRow"><i class="fa fa-trash"></i></button>' +
